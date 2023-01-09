@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class NumberConverter {
     int[] digits;
     int base;
@@ -26,18 +28,42 @@ public class NumberConverter {
         return digits;
     }
 
-    public int[] convertToDecimal() {
-        for(int x: digits){
-            if (x != 1 || x != 0)
-        }
+    public int convertToDecimal() {
+        ArrayList<Integer> digitsInDecimal = new ArrayList<>();
+        int exponent = 0;
         for(int i = digits.length-1; i > -1; i--){
-            digits
+            int digitInDecimal = digits[i]* (int)Math.pow(base, exponent);
+            digitsInDecimal.add(0,digitInDecimal);
+            exponent++;
         }
-        return null;
+        int sum = 0;
+        for(int x: digitsInDecimal){
+            sum += x;
+        }
+        return sum;
     }
 
-    public int[] convertToBinary() {
-        return null;
+    public String convertToBinary() {
+        int toDecimal = convertToDecimal();
+        /*String numberAsString = Integer.toString(toDecimal);
+        int[] digitsTemp = new int[numberAsString.length()];
+        for (int i = 0; i < numberAsString.length(); i++) {
+            String single = numberAsString.substring(i,i+1);
+            int d = Integer.parseInt(single);
+            digitsTemp[i] = d;
+        }
+
+         */
+        ArrayList<Integer> digitsToBinary = new ArrayList<>();
+        while((toDecimal/2.0)%2 < 0.0){
+            digitsToBinary.add(0,toDecimal%2);
+            toDecimal /= 2;
+        }
+        String s = "";
+        for(int x: digitsToBinary){
+            s += x;
+        }
+        return s;
     }
 
     public int[] convertToOctal() {
