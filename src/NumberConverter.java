@@ -69,5 +69,21 @@ public class NumberConverter {
     public int[] convertToOctal() {
         return null;
     }
+
+    public String convertToAnyBase(int base){
+        String charList = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%^&*|?{}";
+        int toDecimal = convertToDecimal();
+        ArrayList<Integer> digitsToOtherBase = new ArrayList<>();
+        while((toDecimal/(double)base)%base > 0.0){
+            digitsToOtherBase.add(0,toDecimal%base);
+            toDecimal /= base;
+        }
+        String s = "(";
+        for(int x: digitsToOtherBase){
+            s += x;
+        }
+        s += ")"+base;
+        return s;
+    }
 }
 
