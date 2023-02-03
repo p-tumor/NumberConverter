@@ -4,13 +4,7 @@ import java.util.Arrays;
 
 class ConverterRunner {
     public static void main(String[] args) {
-        String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz@#";
-        System.out.println(chars.length());
-        String[] charList = new String[chars.length()];
-        for(int i = 0; i < chars.length();i++){
-            charList[i] = chars.substring(i,i+1);
-        }
-        /*System.out.println("Welcome to the Number Converter!");
+        System.out.println("Welcome to the Number Converter!");
         System.out.println("--------------------------------");
         System.out.print("Enter the base of your number (2, 8 or 10): ");
 
@@ -31,8 +25,6 @@ class ConverterRunner {
         System.out.println("Number in decimal: "+nc.convertToDecimal());
         System.out.println("Number in Binary: "+nc.convertToAnyBase(2));
         System.out.println("Number in octal: "+nc.convertToAnyBase(8));
-
-         */
     }
 }
 
