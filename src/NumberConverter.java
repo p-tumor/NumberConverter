@@ -1,9 +1,7 @@
 import java.util.ArrayList;
-
 public class NumberConverter {
     int[] digits;
     int base;
-
     public NumberConverter(int number, int base) {
         String numberAsString = Integer.toString(number);
         digits = new int[numberAsString.length()];
@@ -14,7 +12,6 @@ public class NumberConverter {
         }
         this.base = base;
     }
-
     public String displayOriginalNumber() {
         String o = "";
         for (int i = 0; i < digits.length; i++) {
@@ -23,11 +20,9 @@ public class NumberConverter {
         o = o + "\n";
         return o;
     }
-
     public int[] getDigits() {
         return digits;
     }
-
     public int convertToDecimal() {
         ArrayList<Integer> digitsInDecimal = new ArrayList<>();
         int exponent = 0;
@@ -42,52 +37,21 @@ public class NumberConverter {
         }
         return sum;
     }
-
-    public String convertToBinary() {
-        int toDecimal = convertToDecimal();
-        /*String numberAsString = Integer.toString(toDecimal);
-        int[] digitsTemp = new int[numberAsString.length()];
-        for (int i = 0; i < numberAsString.length(); i++) {
-            String single = numberAsString.substring(i,i+1);
-            int d = Integer.parseInt(single);
-            digitsTemp[i] = d;
-        }
-
-         */
-        ArrayList<Integer> digitsToBinary = new ArrayList<>();
-        while ((toDecimal / 2.0) % 2 < 0.0) {
-            digitsToBinary.add(0, toDecimal % 2);
-            toDecimal /= 2;
-        }
-        String s = "";
-        for (int x : digitsToBinary) {
-            s += x;
-        }
-        return s;
-    }
-
-    public int[] convertToOctal() {
-        return null;
-    }
-
     public String convertToAnyBase(int base) {
         String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz=/";
         StringBuilder s = new StringBuilder("(");
-        double toDecimal = convertToDecimal();
-        while ((toDecimal / base) >= base) {
-            toDecimal /= base;
-            double temp = toDecimal;
-            if(temp%1 > 0){
-                double temp2 = (temp%1) * base;
-                s.insert(0,base);
-                System.out.println("this");
-            }else {
-                s.insert(0,temp%base);
-                System.out.println("that");
-            }
+        double temp;
+        int count = 0;
+        for (double toDecimal = convertToDecimal(); toDecimal > 0; toDecimal = (int) temp) {
+            count++;
+            temp =(toDecimal / base);
+            int remainder = (int) ((temp % 1) * base);
+            if(remainder > 9){
+                int tempInt = Math.abs(9-remainder)-1;
+                s.insert(1,chars.charAt(tempInt));
+            }else s.insert(1, remainder);
         }
-        s.append(")").append(base);
+        s.append(")"+base);
         return s.toString();
     }
 }
-
