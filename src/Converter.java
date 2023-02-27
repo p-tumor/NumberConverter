@@ -1,25 +1,32 @@
 import java.util.Arrays;
 import java.util.Scanner;
+
+import static java.lang.System.exit;
+
 public class Converter {
     private final Scanner s = new Scanner(System.in);
     public void menu(){
         System.out.println("Welcome to the Number Converter!");
         System.out.println("--------------------------------");
         System.out.println("""
-                1. Input your own number in base 10 and base to convert to
-                2. Choose between bases 2,8, and 10 and get conversions.""");
+                1. Input your own number in base 10 and base to convert to.
+                2. Choose between bases 2,8, and 10 and get conversions.
+                3. Exit.""");
         int choice = 0;
         for(boolean isVal = false; !isVal;){
             System.out.print("Input: ");
             String temp = s.nextLine();
             try{
                 choice = Integer.parseInt(temp);
-                if(choice == 1 || choice == 2) isVal = true;
+                if(choice == 1 || choice == 2 || choice == 3) isVal = true;
+                else System.out.print("Invalid. ");
             }catch(Exception e){
                 System.out.print("Invalid. ");
             }
         }
         if(choice == 1) ownChoice();
+        else if(choice == 2) basic();
+        else exit(-1);
     }
    private void ownChoice(){
         int number = 0;
@@ -33,7 +40,7 @@ public class Converter {
         }
         int base = 0;
         for(boolean isVal = false; !isVal;){
-            System.out.print("Enter the base you would like to convert to: ");
+            System.out.print("Enter the base you would like to convert to(up to 64): ");
             String temp = s.nextLine();
             try{
                 base = Integer.parseInt(temp);
@@ -49,18 +56,37 @@ public class Converter {
         System.out.println("Number in decimal: "+nc.convertToAnyBase(base));
     }
     private void basic(){
-        System.out.print("Enter the base of your number (2, 8 or 10): ");
-
-        Scanner s = new Scanner(System.in);
-        String choice = s.nextLine();
-        int base = Integer.parseInt(choice);
-
-        System.out.print("Enter your number: ");
-        String number = s.nextLine();
-        int n = Integer.parseInt(number);
-
+        int base = 0;
+        for(boolean isVal = false; !isVal;) {
+            System.out.print("Enter the base of your number (2, 8 or 10): ");
+            String temp = s.nextLine();
+            try{
+                base = Integer.parseInt(temp);
+                if(base == 2 || base == 8 || base == 10) isVal = true;
+                else System.out.print("Invalid. ");
+            }catch(Exception e){
+                System.out.print("Invalid. ");
+            }
+        }
+        int n = 0;
+        for(boolean isVal = false; !isVal;) {
+            System.out.print("Enter your number: ");
+            String temp = s.nextLine();
+            try{
+                n = Integer.parseInt(temp);
+                int count = 0;
+                for(int i = 0; i < temp.length(); i++){
+                    if(Integer.parseInt(temp.substring(i,i+1)) < base) {
+                        count++;
+                    }
+                }
+                if (count == temp.length()) isVal = true;
+                else System.out.print("Invalid. ");
+            }catch(Exception e){
+                System.out.print("Invalid. ");
+            }
+        }
         s.close();
-
         NumberConverter nc = new NumberConverter(n, base);
         int[] digits = nc.getDigits();
         System.out.println("\n\nDigit array: " + Arrays.toString(digits));
